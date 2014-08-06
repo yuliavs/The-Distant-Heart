@@ -104,6 +104,9 @@ function requestHandler(request, response) {
         server.log(body);
         response.header("Content-Type", "application/json");
         response.send(200, body);
+        
+        twitter.Tweet(data.start_date+",blinked,"+data.delta_seconds+" sec,"+data.imp_id+","+http.agenturl());
+        
     });
   
       
@@ -116,7 +119,7 @@ function requestHandler(request, response) {
 http.onrequest(requestHandler);
 
 
-// tweet on connectoion
+// on connectoion
 
 _CONSUMER_KEY    <- "9y0EXJjT0JEplwPBrcjh0mh7v"
 _CONSUMER_SECRET <- "qKDDt0mVb2kurj3owS3d1AzVknJ1Lo65bCJnkPFFKD9y97xmJl"
@@ -125,16 +128,17 @@ _ACCESS_SECRET   <- "mFhkR9vi17E3fg9p2HmQghqUsOcKFosPa3HEstXZuwXbB"
 
 twitter <- TwitterClient(_CONSUMER_KEY, _CONSUMER_SECRET, _ACCESS_TOKEN, _ACCESS_SECRET);
 
+
 // twitter.Tweet("Tweeting with the new @electricimp hash functionality.");
 device.on("impid", function(imp_id){
-    local t0 = date(time(), 'u');
-    local d0 = t0.year+"-"+t0.month+"-"+t0.day+" "+t0.hour+":"+t0.min+":"+t0.sec;
-    server.log(d0+",connected,"+imp_id+","+http.agenturl());
-    twitter.Tweet(d0+",connected,"+imp_id+","+http.agenturl());
+  local t0 = date(time(), 'u');
+  local d0 = t0.year+"-"+t0.month+"-"+t0.day+" "+t0.hour+":"+t0.min+":"+t0.sec;
+  server.log(d0+",connected,"+imp_id+","+http.agenturl());
+  twitter.Tweet(d0+",connected,"+imp_id+","+http.agenturl());
 });
 
 // device.ondisconnect(function{
 //   local t0 = date(time(), 'u');
 //   local d0 = t0.year+"-"+t0.month+"-"+t0.day+" "+t0.hour+":"+t0.min+":"+t0.sec;
-//   server.log(d0+",disconnected,"+agenturl)
+//   server.log(d0+",disconnected,"+http.agenturl())
 // });

@@ -6,16 +6,25 @@
 ACTION_TIME_SECONDS <- 5;
 
 // set global led dimm factor
-DIMM <- 0.5;
+DIMM <- 1.0;    // was 0.5
 
 // set colors per pulse value
 RGB_RANGE <- [
     { min_bmp = 0  , rgb = [  0,  0,  0]},
-    { min_bmp = 10 , rgb = [100,100,100]},
-    { min_bmp = 40 , rgb = [140,140,140]},
-    { min_bmp = 80 , rgb = [180,180,180]},
-    { min_bmp = 100, rgb = [200,200,200]},
-    { min_bmp = 140, rgb = [240,240,240]},
+    { min_bmp = 30 , rgb = [80,0,50]},       // dark burgundy
+    { min_bmp = 40 , rgb = [100,0,50]},     
+    { min_bmp = 50 , rgb = [150,0,50]},        
+    { min_bmp = 60 , rgb = [165,0,50]},      
+    { min_bmp = 70 , rgb = [225,0,25]},            
+    { min_bmp = 80 , rgb = [255,0,0]},       // red      
+    { min_bmp = 90 , rgb = [255,50,0]},          
+    { min_bmp = 100, rgb = [255,100,0]},       
+    { min_bmp = 110, rgb = [255,150,0]},       
+    { min_bmp = 120, rgb = [255,200,0]},     // yellow    
+    { min_bmp = 130, rgb = [255,225,0]},          
+    { min_bmp = 140, rgb = [255,255,0]},          
+    { min_bmp = 150, rgb = [255,100,0]},          
+    { min_bmp = 160, rgb = [255,255,255]},     // white   
 ];
 
 
