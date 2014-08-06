@@ -42,7 +42,7 @@ def extract_bmp(text, cfg):
             i = int(s)
             if (i>=cfg['bmp_min']) & (i<=cfg['bmp_max']):
                 res = i
-        if bool(re.search(r"^(?i)[0-9]{2,3}bmp", s)):
+        if bool(re.search(r"^(?i)[0-9]{2,3}bmp.*", s)):
             s = re.sub(r"^([0-9]+)bmp.*",r"\1", s)
             i = int(s)
             if (i>=cfg['bmp_min']) & (i<=cfg['bmp_max']):
