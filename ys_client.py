@@ -17,7 +17,7 @@ def time_stamp():
 def write_data(data):
     if data is not None:
         fn = os.path.join(os.path.dirname(__file__),"data.log")
-        s = time_stamp()+" "+data+"\n"
+        s = str(time_stamp())+" "+str(data)+"\n"
         with open(fn, "a") as f:
             f.write(s)
 
@@ -51,7 +51,18 @@ def extract_bmp(text, cfg):
     return res
 
 
+def save_tweet(tweet):
+    d = {}
+    d['date'] = tweet.date
+    d['link'] = tweet.link
+    d['text'] = tweet.text
+    d['username'] = tweet.username
+    s = json.dumps(d)
+    write_data(s)
+
+
 def on_tweet(tweet):
+    save_tweet(tweet)
     cfg = readConfig()
     bmp = extract_bmp(tweet.text, cfg)
     if bmp is not False:
