@@ -16,7 +16,7 @@ def time_stamp():
 
 def write_data(data):
     if data is not None:
-        fn = os.path.join(os.path.dirname(__file__),"data/log.json")
+        fn = os.path.join(os.path.dirname(__file__),"data.log")
         s = time_stamp()+" "+data+"\n"
         with open(fn, "a") as f:
             f.write(s)
@@ -75,7 +75,7 @@ def main():
         users = cfg["twitter_to_impurl"].keys()
         
         for user in users:
-            db = user+"_tweets.db"
+            db = user+"_tweets.log"
             _ = UserWatcher(user, database=db).get_new_tweets()
             bots.append(UserWatcher(user, action=on_tweet, database=db))
 

@@ -72,49 +72,60 @@ class TwitterClient {
 
 
 // Log the URLs we need
-server.log("Turn LED On: " + http.agenturl() + "?bmp=1");
-server.log("Turn LED Off: " + http.agenturl() + "?bpm=0");
+server.log("Turn pulse On: " + http.agenturl() + "?bmp=75");
+server.log("Check if imp is working: " + http.agenturl() + "?test");
  
 function requestHandler(request, response) {
-  try {
-    // check if the user sent bmp as a query parameter
-    if ("bmp" in request.query) {
+    try {
       
-      // if they did, and bmp=1.. set our variable to 1
-      local bmp_string = request.query.bmp
-      
-      server.log("BMP rate recived : " + bmp_string);
-
-      if (regexp("[0-9]+").match(bmp_string)) {
-
-        // convert the bmp query parameter to an integer
-        local bmp_rate = request.query.bmp.tointeger();
- 
-        // send "bmp" message to device, and send bmp_rate as the data
-        device.send("bmp", bmp_rate); 
-
-        server.log("BMP rate sent : " + bmp_rate);
-      }
-    }
-
-    // send a response back saying everything was OK.
-    device.on("senddata", function(data) {
-        data.agenturl <- http.agenturl()
-        local body = http.jsonencode(data);
-        server.log(body);
-        response.header("Content-Type", "application/json");
-        response.send(200, body);
+        // check if the user sent bmp as a query parameter
+        if ("bmp" in request.query) {
+          
+            // if they did, and bmp=1.. set our variable to 1
+            local bmp_string = request.query.bmp
+            
+            if (regexp("[0-9]+").match(bmp_string)) {
+            
+                // convert the bmp query parameter to an integer
+                local bmp_rate = request.query.bmp.tointeger();
+                
+                // send "bmp" message to device, and send bmp_rate as the data
+                device.send("bmp", bmp_rate); 
         
-        twitter.Tweet(data.start_date+",blinked,"+data.delta_seconds+" sec,"+data.imp_id+","+http.agenturl());
+            }
         
-    });
+            // send a response back saying everything was OK.
+            device.on("senddata", function(data) {
+                
+                data.agenturl <- http.agenturl()
+                local body = http.jsonencode(data);
+                server.log(body);
+                response.header("Content-Type", "application/json");
+                response.send(200, body);
+                
+                // tweet
+                twitter.Tweet(data.start_date+",blinked,"+data.delta_seconds+" sec,"+data.imp_id+","+http.agenturl());
+            
+            });
+        
+        } else if("test" in request.query) {
+            
+            // ping imp and send responses
+            device.on("pong", function(_) {
+                response.send(200, "imp is connected!");
+            }); 
+            device.send("ping",0);
+            
+        }
   
-      
-  } catch (ex) {
-    response.send(500, "Internal Server Error: " + ex);
-  }
+    } catch (ex) {
+        
+        response.send(500, "Internal Server Error: " + ex);
+    
+    }
+    
 }
- 
+
 // register the HTTP handler
 http.onrequest(requestHandler);
 
@@ -137,8 +148,3 @@ device.on("impid", function(imp_id){
   twitter.Tweet(d0+",connected,"+imp_id+","+http.agenturl());
 });
 
-// device.ondisconnect(function{
-//   local t0 = date(time(), 'u');
-//   local d0 = t0.year+"-"+t0.month+"-"+t0.day+" "+t0.hour+":"+t0.min+":"+t0.sec;
-//   server.log(d0+",disconnected,"+http.agenturl())
-// });

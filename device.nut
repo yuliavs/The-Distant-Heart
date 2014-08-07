@@ -3,7 +3,7 @@
 // CONFIGURE GLOBAL SETTINGS -----------------
 
 // max time the device would be lkinking 
-ACTION_TIME_SECONDS <- 5;
+ACTION_TIME_SECONDS <- 100; //60*2;
 
 // set global led dimm factor
 DIMM <- 1.0;    // was 0.5
@@ -182,8 +182,12 @@ function main(bmp){
 
 };
 
-// register connection imp-id and wifi-id
-agent.send("impid",hardware.getimpeeid()+","+imp.getbssid())
+// ping if device on
+agent.on("ping", function(_){ agent.send("pong", 0);});
 
 // register a handler for "led" messages from the agent
 agent.on("bmp", main);
+
+// register connection imp-id and wifi-id
+agent.send("impid",hardware.getimpeeid()+","+imp.getbssid())
+
