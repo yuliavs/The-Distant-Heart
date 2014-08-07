@@ -30,7 +30,7 @@ def call_imp(url_):
         else:
             res = '{"status_code":'+r.status_code+',"reason":"'+r.reason+'"}'
         return res
-    except Exeption, e:
+    except Exception, e:
         on_error(e)
 
 
