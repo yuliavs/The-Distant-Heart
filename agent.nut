@@ -132,10 +132,10 @@ http.onrequest(requestHandler);
 
 // on connectoion
 
-_CONSUMER_KEY    <- "9y0EXJjT0JEplwPBrcjh0mh7v"
-_CONSUMER_SECRET <- "qKDDt0mVb2kurj3owS3d1AzVknJ1Lo65bCJnkPFFKD9y97xmJl"
-_ACCESS_TOKEN    <- "2707764746-aoJDCG6JrQzxa5UHOzfiILnDHRLhW1hlC350fv8"
-_ACCESS_SECRET   <- "mFhkR9vi17E3fg9p2HmQghqUsOcKFosPa3HEstXZuwXbB"
+_CONSUMER_KEY    <- ""
+_CONSUMER_SECRET <- ""
+_ACCESS_TOKEN    <- ""
+_ACCESS_SECRET   <- ""
 
 twitter <- TwitterClient(_CONSUMER_KEY, _CONSUMER_SECRET, _ACCESS_TOKEN, _ACCESS_SECRET);
 
