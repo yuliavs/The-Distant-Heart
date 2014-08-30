@@ -1,2 +1,0 @@
-echo 'timestamp,text,date,username,link,agenturl,bmp,delta_seconds,imp_id,start_date,start_timestamp,wifi_BSSID,wifi_signal_strenght,r,g,b'
-    cat - | jq -c "[.timestamp,.text,.date,.username,.link,.agenturl,.bmp,.delta_seconds,.imp_id,.start_date,.start_timestamp,.wifi_BSSID,.wifi_signal_strenght,.rgb]" | sed -E 's/\[|\]//g'
